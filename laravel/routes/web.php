@@ -20,8 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 
 // rotte pubbliche 
-// Route::get('/posts', 'PostController@index')->name('posts.index');
-
+Route::get('/posts', 'PostController@index')->name('posts.index');
 Route::get('/home', 'HomeController@index')->name('home');
 
 // Rotte protette da autenticazione
@@ -30,6 +29,8 @@ Route::prefix('admin') // prefisso rotte
     ->middleware('auth') // filtro per autenticazione
     ->name('admin.') // prefisso di tutti i nomi delle rotte
     ->group(function () {
+
+    // Route::get('/', 'HomeController@index');
 
     Route::resource('posts', 'PostController');
 
