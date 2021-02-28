@@ -13,14 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
 // rotte pubbliche 
+Route::get('/', 'PostController@index')->name('posts.index');
+
 Route::get('/posts', 'PostController@index')->name('posts.index');
+
+Route::get('/posts/{slug}', 'PostController@show')->name('posts.show');
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 // Rotte protette da autenticazione
