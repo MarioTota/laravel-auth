@@ -63,11 +63,21 @@ class PostController extends Controller
         }
 
         $newPost->fill($data); // fillable nel model
-        $newPost->save();
+        $saved = $newPost->save();
 
-        Mail::to('mail@mail.it')->send(new BlogMail());
+        if ($saved) {
+            Mail::to('pippo@mail.it')->send(new BlogMail($newPost));
 
-        return redirect()->route('admin.posts.index');
+            return redirect()
+                ->route("admin.posts.index")
+                ->with("message", "Post " . $newPost->title. " creato correttamente!");
+        } else {
+            return redirect()
+                ->route("admin.posts.index")
+                ->with("message" , "Errore nel salvataggio");
+        }
+
+
 
     }
 

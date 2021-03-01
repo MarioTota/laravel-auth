@@ -7,6 +7,8 @@
     <title>Post</title>
 </head>
 <body>
-    <h1>Testo prova</h1>
+    <h1>{{ $post->title }}</h1>
+    <img src="{{ asset('storage/' . $post->img_path) }}" alt="">
+    <p>{{ $post->body }}</p>
 </body>
 </html>
