@@ -8,6 +8,8 @@ use Illuminate\Support\Str;
 use App\Post;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Mail\BlogMail;
+use Illuminate\Support\Facades\Mail;
 
 
 class PostController extends Controller
@@ -62,6 +64,8 @@ class PostController extends Controller
 
         $newPost->fill($data); // fillable nel model
         $newPost->save();
+
+        Mail::to('mail@mail.it')->send(new BlogMail());
 
         return redirect()->route('admin.posts.index');
 
