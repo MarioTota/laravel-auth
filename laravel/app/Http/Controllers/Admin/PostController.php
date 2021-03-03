@@ -66,7 +66,7 @@ class PostController extends Controller
         $saved = $newPost->save();
 
         if ($saved) {
-            Mail::to('pippo@mail.it')->send(new BlogMail($newPost));
+            // Mail::to('pippo@mail.it')->send(new BlogMail($newPost));
 
             return redirect()
                 ->route("admin.posts.index")
@@ -113,9 +113,21 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         $data = $request->all();
+        // dd($data);
+        if (!empty($data['img_path'])) {
+            // verifico se è presente un immagine precedente se si devo cancellarla
+            if (!empty($post->img_path)) {
+                Storage::disk('public')->delete($post->img_path);
+            }
+            $data['img_path'] = Storage::disk('public')->put('images' , $data['img_path']);
+        }
+
+
         $post->update($data);
 
-        return redirect()->route('admin.posts.index');
+        return redirect()
+            ->route('admin.posts.show' , $post->id)
+            ->with('message' , 'Post' . $post->title . ' aggiornato correttamente');
     }
 
     /**

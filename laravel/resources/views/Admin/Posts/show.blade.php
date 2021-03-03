@@ -2,6 +2,13 @@
 
 @section('content')
 <div class="container">
+
+    @if (session("message"))
+        <div class="alert alert-success">
+            {{ session("message") }}
+        </div>
+    @endif
+    
     <h1>Dettaglio post</h1>
     <table class="table table-striped table-bordered">
         @foreach ($post->getAttributes() as $key => $value)
